@@ -1,0 +1,154 @@
+//
+//  ViewController.swift
+//  Calculator
+//
+//  Created by Вероника Москалюк on 24.01.2026.
+//
+
+import UIKit
+
+enum CalculationError: Error{
+    case dividedByZero
+}
+
+enum Operation: String{
+    case add = "+"
+    case subtract = "-"
+    case multiply = "x"
+    case divide = "/"
+    
+    func Calculate(_ number1: Double,_ number2: Double) throws -> Double{
+        switch self{
+        case .add:
+            return number1 + number2
+        case .subtract:
+            return number1 - number2
+        case .multiply:
+            return number1*number2
+        case .divide:
+            if number2 == 0{
+                throw CalculationError.dividedByZero
+            }
+            return number1/number2
+        }
+        
+    }
+}
+
+enum CalculationHistoryItem{
+    case number(Double)
+    case operation(Operation)
+}
+
+class ViewController: UIViewController {
+    
+    @IBAction func pressedButton(_ sender: UIButton) {
+        guard let buttonText = sender.currentTitle else {
+            return }
+        
+        if buttonText == "," && Label.text?.contains(",") == true{
+            return
+        }
+        if Label.text == "0"{
+            Label.text = buttonText
+        }
+        else{
+            Label.text?.append(buttonText)
+        }
+    }
+    
+    @IBAction func operationButtonPressed(_ sender: UIButton) {
+        guard let buttonText = sender.currentTitle, let buttonOperator = Operation(rawValue: buttonText) else {
+            return }
+        guard
+            let labelText = Label.text, let labelNumber = numberFormatter.number(from: labelText)?.doubleValue
+        else {return}
+        
+        calculationHistory.append(.number(labelNumber))
+        calculationHistory.append(.operation(buttonOperator))
+        
+        ResetLabelText()
+    }
+    
+    @IBAction func unwindAction(unwindSegue: UIStoryboardSegue){
+        
+    }
+    
+    
+    @IBAction func equalsButtonPressed() {
+        guard
+            let labelText = Label.text, let labelNumber = numberFormatter.number(from: labelText)?.doubleValue
+            else {return}
+        
+        calculationHistory.append(.number(labelNumber))
+        do {
+            let result = try  calculate()
+            Label.text = numberFormatter.string(from: NSNumber(value: result))
+            calculations.append((calculationHistory, result))
+        } catch {
+            Label.text = "Error"
+        }
+        
+        calculationHistory.removeAll()
+    }
+    
+    @IBOutlet weak var Label: UILabel!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        ResetLabelText()
+        for case let button as UIButton in self.view.subviews {
+                button.layer.cornerRadius = 55
+                button.clipsToBounds = true
+            }
+    }
+    
+    var calculationHistory: [CalculationHistoryItem] = []
+    var calculations: [(expression:[CalculationHistoryItem], result: Double)] = []
+    
+    
+    lazy var numberFormatter : NumberFormatter = {
+        let numberFormatter = NumberFormatter()
+        
+        numberFormatter.usesGroupingSeparator = false
+        numberFormatter.locale = Locale(identifier: "ru_RU")
+        numberFormatter.numberStyle = .decimal
+        
+        return numberFormatter
+    }()
+    
+    func calculate() throws -> Double{
+        guard !calculationHistory.isEmpty else { return 0 }
+        
+        guard case .number(let firstNumber) = calculationHistory[0] else {return 0}
+        
+        var currentResult = firstNumber
+        
+        for index in stride(from: 1, to: calculationHistory.count - 1, by: 2){
+            guard
+                case .operation(let operation) = calculationHistory[index],
+                    case .number(let number) = calculationHistory[index+1] else {break}
+            currentResult = try operation.Calculate(currentResult, number)
+        }
+        return currentResult
+    }
+    
+    @IBAction func clearButtonPressed(_ sender: UIButton) {
+        calculationHistory.removeAll()
+        ResetLabelText()
+    }
+    
+    func ResetLabelText(){
+        Label.text = "0"
+    }
+    override func prepare (for segue: UIStoryboardSegue, sender: Any?){
+        guard segue.identifier == "CALCULATIONS_LIST", let destinationVC = segue.destination as? CalculationsListViewController else { return }
+                destinationVC.calculations = calculations
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: false)
+    }
+}
+

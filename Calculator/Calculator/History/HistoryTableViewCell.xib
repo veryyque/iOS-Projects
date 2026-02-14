@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="24506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24504"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <point key="canvasLocation" x="79" y="106"/>
+        </view>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="121" id="wOS-cF-ZXW">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="121"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="wOS-cF-ZXW" id="T54-Lg-CYR" customClass="HistoryTableViewCell" customModule="Calculator" customModuleProvider="target">
+                <rect key="frame" x="0.0" y="0.0" width="393" height="121"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YfS-N5-BRN">
+                        <rect key="frame" x="15" y="35" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ma4-5c-NZO">
+                        <rect key="frame" x="15" y="65" width="42" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="YfS-N5-BRN" firstAttribute="leading" secondItem="T54-Lg-CYR" secondAttribute="leading" constant="15" id="8gj-pz-e7q"/>
+                    <constraint firstItem="YfS-N5-BRN" firstAttribute="centerY" secondItem="T54-Lg-CYR" secondAttribute="centerY" constant="-15" id="JZh-Al-vZ1"/>
+                    <constraint firstItem="Ma4-5c-NZO" firstAttribute="leading" secondItem="T54-Lg-CYR" secondAttribute="leading" constant="15" id="Mww-Yg-lv5"/>
+                    <constraint firstItem="Ma4-5c-NZO" firstAttribute="centerY" secondItem="T54-Lg-CYR" secondAttribute="centerY" constant="15" id="frP-yV-IEs"/>
+                </constraints>
+                <connections>
+                    <outlet property="expressionLabel" destination="Ma4-5c-NZO" id="Mre-5i-wVZ"/>
+                    <outlet property="resultLabel" destination="YfS-N5-BRN" id="0uu-Wt-RMZ"/>
+                </connections>
+            </tableViewCellContentView>
+            <point key="canvasLocation" x="1012.9770992366412" y="71.478873239436624"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
