@@ -6,7 +6,7 @@ import Observation
 @available(iOS 26.0, *)
 @Observable // Вместо ObservableObject
 class AudioManager {
-    // @Published больше не нужен с @Observable
+    
     var isPlaying = false
     var volume: Double = 0.5 {
         didSet {
@@ -19,7 +19,7 @@ class AudioManager {
     var isSleepTimerActive = false
     
     private var audioPlayer: AVAudioPlayer?
-    private var sleepTimer: Task<Void, Never>? // Используем Task вместо Timer
+    private var sleepTimer: Task<Void, Never>?
     
     init() {
         Task {
@@ -81,8 +81,6 @@ class AudioManager {
         audioPlayer?.volume = Float(volume)
     }
     
-    // MARK: - Sleep Timer с async/await
-    
     func startSleepTimer(minutes: Int) {
         stopSleepTimer()
 
@@ -115,8 +113,6 @@ class AudioManager {
         isSleepTimerActive = false
         timeRemaining = 0
     }
-    
-    // MARK: - Private Methods
     
     private func configureAudioSession() async {
         do {

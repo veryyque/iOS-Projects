@@ -30,7 +30,6 @@ struct PlayerControlsView: View {
                             .font(.caption)
                             .foregroundColor(.white.opacity(0.6))
                         
-                        // ТЕПЕРЬ $audioManager РАБОТАЕТ!
                         Slider(
                             value: $audioManager.volume,
                             in: 0...1,
