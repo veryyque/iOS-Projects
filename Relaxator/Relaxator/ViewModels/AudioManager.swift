@@ -28,8 +28,6 @@ class AudioManager {
         }
     }
     
-    // MARK: - Public Methods
-    
     func playSound(_ category: SoundCategory) {
         stop()
         
@@ -116,12 +114,11 @@ class AudioManager {
     
     private func configureAudioSession() async {
         do {
-            // Новый API для iOS 26
             let session = AVAudioSession.sharedInstance()
             try await session.setCategory(
                 .playback,
                 mode: .default,
-                policy: .longFormAudio, // Новая политика
+                policy: .default,
                 options: [.mixWithOthers, .allowAirPlay, .duckOthers]
             )
             try await session.setActive(true)

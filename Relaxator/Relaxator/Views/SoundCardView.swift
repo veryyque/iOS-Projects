@@ -9,7 +9,6 @@ import SwiftUI
 
 struct SoundCardView: View {
     let category: SoundCategory
-    let isSelected: Bool
     let isPlaying: Bool
     
     @State private var isPressed = false
@@ -48,12 +47,6 @@ struct SoundCardView: View {
             ZStack {
                 RoundedRectangle(cornerRadius: 20)
                     .fill(.ultraThinMaterial)
-                
-                if isSelected {
-                    RoundedRectangle(cornerRadius: 20)
-                        .stroke(category.color, lineWidth: 2)
-                        .shadow(color: category.color.opacity(0.5), radius: 8)
-                }
             }
         )
         .scaleEffect(isPressed ? 0.98 : 1.0)

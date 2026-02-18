@@ -3,8 +3,9 @@ import SwiftUI
 struct ContentView: View {
     @Environment(AudioManager.self) private var audioManager
     
-    @State private var selected: SoundCategory = .rain
+    @State private var selected: SoundCategory? = nil
     @State private var showTimer = false
+    @State private var selectedSoundForDetail: SoundCategory?
     
     var body: some View {
         NavigationStack {
@@ -33,21 +34,14 @@ struct ContentView: View {
                             ForEach(SoundCategory.allCases) { sound in
                                 SoundCardView(
                                     category: sound,
-                                    isSelected: selected == sound,
                                     isPlaying: audioManager.isPlaying && selected == sound
                                 )
                                 .onTapGesture {
-                                    selected = sound
-                                    audioManager.playSound(sound)
+                                    selectedSoundForDetail = sound
                                 }
                             }
                         }
                         .padding(.horizontal, 16)
-                        
-                        if audioManager.isPlaying {
-                            PlayerControlsView()
-                                .padding(.horizontal, 16)
-                        }
                     }
                     .padding(.vertical, 20)
                 }
@@ -66,11 +60,14 @@ struct ContentView: View {
                 SleepTimerView()
                     .environment(audioManager)
             }
+            .fullScreenCover(item: $selectedSoundForDetail) { sound in
+                            SoundDetailView(category: sound)
+                                .environment(audioManager)
+            }
         }
         .onAppear {
             let settings = SoundSettings.load()
             if let found = SoundCategory.allCases.first(where: { $0.fileName == settings.lastPlayedSound }) {
-                selected = found
             }
             audioManager.volume = settings.volume
         }
