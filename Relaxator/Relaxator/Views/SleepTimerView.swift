@@ -39,7 +39,6 @@ struct SleepTimerView: View {
                         .multilineTextAlignment(.center)
                         .padding(.horizontal)
                     
-                    // Picker времени
                     VStack(spacing: 20) {
                         Text("Выберите время")
                             .font(.headline)
@@ -98,7 +97,6 @@ struct SleepTimerView: View {
     }
 }
 
-// Компонент выбора времени
 struct TimeChip: View {
     let minutes: Int
     let isSelected: Bool

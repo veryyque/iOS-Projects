@@ -4,7 +4,7 @@ import SwiftUI
 import Observation
 
 @available(iOS 26.0, *)
-@Observable // Вместо ObservableObject
+@Observable
 class AudioManager {
     
     var isPlaying = false

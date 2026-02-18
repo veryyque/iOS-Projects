@@ -7,9 +7,7 @@ class AudioService {
     static let shared = AudioService()
     private init() {}
     
-    // Новейший API для iOS 26
     func requestPermissions() async throws -> Bool {
-        // В iOS 26 используется асинхронный API
         let permission = await AVAudioApplication.requestRecordPermission()
         
         if permission == true {
@@ -19,7 +17,6 @@ class AudioService {
         }
     }
     
-    // Современный способ показа настроек
     @MainActor
     private func showSettingsAlert() {
         let alert = UIAlertController(
@@ -36,14 +33,12 @@ class AudioService {
         
         alert.addAction(UIAlertAction(title: "Отмена", style: .cancel))
         
-        // Новый способ получения rootViewController в iOS 26
         guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let window = scene.keyWindow else { return }
         
         window.rootViewController?.present(alert, animated: true)
     }
     
-    // Проверка звуковых файлов с использованием новой системы
     func validateSoundFiles() -> [SoundFileStatus] {
         SoundCategory.allCases.compactMap { category in
             let url = Bundle.main.url(forResource: category.fileName, withExtension: "mp3")
@@ -53,7 +48,6 @@ class AudioService {
     }
 }
 
-// Современная обработка ошибок
 enum AudioError: LocalizedError {
     case permissionDenied
     case unknown
@@ -68,7 +62,6 @@ enum AudioError: LocalizedError {
     }
 }
 
-// Структура для статуса файлов
 struct SoundFileStatus: Identifiable {
     let id = UUID()
     let category: SoundCategory

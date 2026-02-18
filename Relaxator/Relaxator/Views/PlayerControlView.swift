@@ -5,7 +5,6 @@ struct PlayerControlsView: View {
     @State private var showingVolumeSlider = true
     
     var body: some View {
-        // Добавляем @Bindable для доступа к $audioManager
         @Bindable var audioManager = audioManager
         
         VStack(spacing: 20) {
